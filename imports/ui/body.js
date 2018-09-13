@@ -17,6 +17,9 @@ Template.body.helpers({
     }
     return Tasks.find({}, { sort: { createdAt: -1 } });
   },
+    incompleteCount() {
+    return Tasks.find({ checked: { $ne: true } }).count();
+  },
 });
 Template.body.events({
 
@@ -33,11 +36,8 @@ Template.body.events({
     });
     // Clear form
     target.text.value = '';
-
   },
     'change .hide-completed input'(event, instance) {
-
     instance.state.set('hideCompleted', event.target.checked);
-
   },
 });
